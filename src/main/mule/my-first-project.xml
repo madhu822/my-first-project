@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="my-first-projectFlow" doc:id="43ec33b7-b850-40c4-8a40-a6452bb7d91d" >
+		<scheduler doc:name="Scheduler" doc:id="bbc9d6b6-d42c-477f-8002-88dead8ed6c8" >
+			<scheduling-strategy >
+				<fixed-frequency timeUnit="SECONDS" frequency="4"/>
+			</scheduling-strategy>
+		</scheduler>
+		<ee:transform doc:name="Transform Message" doc:id="bfbbf331-8709-4bbe-91ce-3c977a225b2e" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+"madhu"]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="access" ><![CDATA[%dw 2.0
+output application/json
+---
+"hello"]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="e8625eb2-74f5-4828-a410-8da4be6c1e24" message="#[vars.access]"/>
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="592e0249-6d47-4478-8398-8c3de2fe7612" />
+	</flow>
+</mule>
